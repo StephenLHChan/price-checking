@@ -1,0 +1,9 @@
+# Ignore compiled TypeScript files
+*.js
+*.js.map
+
+# Ignore node_modules folder
+node_modules/
+
+# Ignore sensitive configuration files
+.env
