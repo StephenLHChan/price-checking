@@ -5,7 +5,8 @@ import { DataTypes } from 'sequelize';
 const Brand = Sequelize.define('brand', {
   name: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
+    unique: true
   }
 });
 
