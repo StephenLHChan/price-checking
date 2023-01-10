@@ -23,5 +23,19 @@ router.get('/', async (req: express.Request, res: express.Response) => {
     res.json(brands);
 });
 
+// To create a new brand
+router.post('/', validateBrand, async (req: express.Request, res: express.Response) => {
+    const { name } = req.body;
+    // Check if brand name is already in use
+    const existingBrand = await Brand.findOne({ where: { name } });
+    if (existingBrand) {
+      res.status(400).json({ error: 'Brand name already in use' });
+      return;
+    }
+    // Create brand
+    const brand = await Brand.create({ name });
+    res.json(brand);
+  });
+
 
   export default router;
