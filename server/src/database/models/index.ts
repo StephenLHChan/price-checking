@@ -1,4 +1,6 @@
 import Brand from './brand';
+import Merchant from './merchant';
+import Price from './price';
 import Product from './product';
 import ProductCategory from './productCategory';
 import ProductSubCategory from './productSubCategory';
@@ -12,4 +14,4 @@ Product.belongsTo(ProductSubCategory);
 Product.belongsTo(Brand);
 Brand.hasMany(Product);
 
-export { Brand, Product };
+export { Brand, Merchant, Price, Product, ProductCategory};
