@@ -11,6 +11,28 @@ describe('GET /api/brands', () => {
   });
 });
 
+describe('GET /api/brands', () => {
+  it('should return a brand with given id', async () => {
+    const res = await request(app)
+      .get('/api/brands/1')
+      .expect(200);
+
+    expect(res.body.name).toEqual('Brand 1');
+  });
+});
+
+describe('GET /api/brands', () => {
+  it('should return an error(\'Brand not found\')', async () => {
+    const res = await request(app)
+      .get('/api/brands/25')
+      .expect(404);
+
+    expect(res.body.error).toEqual('Brand not found');
+  });
+
+  
+});
+
 describe('POST /api/brands', () => {
   it('should create a new brand', async () => {
     const brand = { name: 'Brand Name 1'};
@@ -19,7 +41,8 @@ describe('POST /api/brands', () => {
       .send(brand)
       .expect(201);
 
-    expect(res.body.name).toEqual('Brand Name 1' );
+    expect(res.body.id).toEqual(4);
+    expect(res.body.name).toEqual('Brand Name 1');
     });
   });
 
