@@ -34,7 +34,7 @@ router.post('/', validateBrand, async (req: express.Request, res: express.Respon
     }
     // Create brand
     const brand = await Brand.create({ name });
-    res.json(brand);
+    res.status(201).json(brand);
   });
 
 // To update the brand
@@ -42,12 +42,13 @@ router.patch('/:id', validateBrand, async (req: express.Request, res: express.Re
     const { id } = req.params;
     const brand = await Brand.findByPk(id);
     if (!brand) {
-    res.status(404).json({ error: 'Brand not found' });
-    return;
+      res.status(404).json({ error: 'Brand not found' });
+      return;
     }
     const { name } = req.body;
     await brand.update({ name });
     res.json(brand);
 });
 
-  export default router;
+
+export default router;
