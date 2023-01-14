@@ -7,7 +7,7 @@ describe('GET /api/brands', () => {
       .get('/api/brands')
       .expect(200);
 
-    expect(res.body.length).toEqual(3);
+    expect(res.body.length).toEqual(4);
   });
 });
 
@@ -41,7 +41,7 @@ describe('POST /api/brands', () => {
       .send(brand)
       .expect(201);
 
-    expect(res.body.id).toEqual(4);
+    expect(res.body.id).toEqual(5);
     expect(res.body.name).toEqual('Brand Name 1');
     });
   });
