@@ -23,6 +23,17 @@ router.get('/', async (req: express.Request, res: express.Response) => {
     res.json(brands);
 });
 
+// To get a brand by id
+router.get('/:id',async (req: express.Request, res: express.Response) => {
+  const { id } = req.params;
+  const brand = await Brand.findByPk(id);
+  if (!brand) {
+    res.status(404).json({ error: 'Brand not found' });
+    return;
+  }
+  res.json(brand);
+});
+
 // To create a new brand
 router.post('/', validateBrand, async (req: express.Request, res: express.Response) => {
     const { name } = req.body;
