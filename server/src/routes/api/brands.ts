@@ -17,6 +17,16 @@ const validateBrand = (req: express.Request, res: express.Response, next: expres
     next();
   };
 
+const checkBrandExist = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const { id } = req.params;
+  const brand = await Brand.findByPk(id);
+  if (!brand) {
+    return res.status(404).json({ error: 'Brand not found' });
+  }
+  (req as any).brand = brand;
+  next()
+};
+
 // To get all brands
 router.get('/', async (req: express.Request, res: express.Response) => {
     const brands = await Brand.findAll();
@@ -24,13 +34,8 @@ router.get('/', async (req: express.Request, res: express.Response) => {
 });
 
 // To get a brand by id
-router.get('/:id',async (req: express.Request, res: express.Response) => {
-  const { id } = req.params;
-  const brand = await Brand.findByPk(id);
-  if (!brand) {
-    res.status(404).json({ error: 'Brand not found' });
-    return;
-  }
+router.get('/:id',checkBrandExist, async (req: express.Request, res: express.Response) => {
+  const brand = (req as any).brand;
   res.json(brand);
 });
 
@@ -49,16 +54,11 @@ router.post('/', validateBrand, async (req: express.Request, res: express.Respon
   });
 
 // To update the brand
-router.patch('/:id', validateBrand, async (req: express.Request, res: express.Response) => {
-    const { id } = req.params;
-    const brand = await Brand.findByPk(id);
-    if (!brand) {
-      res.status(404).json({ error: 'Brand not found' });
-      return;
-    }
-    const { name } = req.body;
-    await brand.update({ name });
-    res.json(brand);
+router.patch('/:id', validateBrand, checkBrandExist, async (req: express.Request, res: express.Response) => {
+  const brand = (req as any).brand;
+  const { name } = req.body;
+  await brand.update({ name });
+  res.json(brand);
 });
 
 
