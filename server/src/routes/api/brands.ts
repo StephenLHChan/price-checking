@@ -1,5 +1,5 @@
 import express from 'express';
-import { Brand } from '../database/models';
+import { Brand } from '../../database/models';
 import * as Joi from 'joi';
 
 const router = express.Router();

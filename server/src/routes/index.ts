@@ -1,9 +1,9 @@
 import express from 'express';
-import brandsRouter from './brands';
-
+import apiRouter from './api'
 
 const router = express.Router();
 
-router.use('/brands', brandsRouter);
+router.use('/api', apiRouter);
+
 
 export default router;
