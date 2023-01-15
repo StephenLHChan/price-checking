@@ -44,7 +44,7 @@ router.post('/', validateMerchant, async (req: express.Request, res: express.Res
     }
     // Create merchant
     const merchant = await Merchant.create({ name });
-    res.json(merchant);
+    res.status(201).json(merchant);
   });
 
 // To update the merchant
