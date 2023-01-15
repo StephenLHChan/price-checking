@@ -1,21 +1,10 @@
 import express from 'express';
-import * as Joi from 'joi';
+
 import { Merchant } from '../../database/models';
+import { validateMerchant }  from '../middleware/validation'
 
 const router = express.Router();
 
-// Validation middleware
-const validateMerchant = (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    const schema = Joi.object({
-      name: Joi.string().min(1).required(),
-    });
-    const { error } = schema.validate(req.body);
-    if (error) {
-      res.status(400).json({ error: error.message });
-      return;
-    }
-    next();
-  };
 
 const checkMerchantExist = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const { id } = req.params;

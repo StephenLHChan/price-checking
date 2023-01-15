@@ -1,21 +1,9 @@
 import express from 'express';
-import * as Joi from 'joi';
+
 import { ProductCategory } from '../../database/models';
+import { validateProductCategory } from '../middleware/validation';
 
 const router = express.Router();
-
-// Validation middleware
-const validateProductCategory = (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  const schema = Joi.object({
-    name: Joi.string().min(1).required(),
-  });
-  const { error } = schema.validate(req.body);
-  if (error) {
-    res.status(400).json({ error: error.message });
-    return;
-  }
-  next();
-};
 
 
 // To get a full list of product category

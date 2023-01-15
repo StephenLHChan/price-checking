@@ -1,23 +1,11 @@
 import express from 'express';
+
 import { Product } from '../../database/models';
-import * as Joi from 'joi';
+import { validateProduct } from '../middleware/validation';
 
 const router = express.Router();
 
-// Validation middleware
-const validateProduct = (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    const schema = Joi.object({
-      name: Joi.string().min(1).required(),
-      subCategoryId: Joi.number().required(),
-      brandId: Joi.number().required()
-    });
-    const { error } = schema.validate(req.body);
-    if (error) {
-      res.status(400).json({ error: error.message });
-      return;
-    }
-    next();
-  };
+
 
 // To get all products
 router.get('/', async (req: express.Request, res: express.Response) => {
