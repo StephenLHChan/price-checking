@@ -33,6 +33,11 @@ router.get('/', async (req: express.Request, res: express.Response) => {
     res.json(merchants);
 });
 
+router.get('/:id',checkMerchantExist, async (req: express.Request, res: express.Response) => {
+  const merchant = (req as any).merchant;
+  res.json(merchant);
+});
+
 // To create a new merchant
 router.post('/', validateMerchant, async (req: express.Request, res: express.Response) => {
     const { name } = req.body;
