@@ -17,6 +17,16 @@ const validateMerchant = (req: express.Request, res: express.Response, next: exp
     next();
   };
 
+const checkMerchantExist = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const { id } = req.params;
+  const merchant = await Merchant.findByPk(id);
+  if (!merchant) {
+    return res.status(404).json({ error: 'Merchant not found' });
+  }
+  (req as any).merchant = merchant;
+  next()
+};
+
 // To get all merchants
 router.get('/', async (req: express.Request, res: express.Response) => {
     const merchants = await Merchant.findAll();
