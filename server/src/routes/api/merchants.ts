@@ -53,13 +53,8 @@ router.post('/', validateMerchant, async (req: express.Request, res: express.Res
   });
 
 // To update the merchant
-router.patch('/:id', validateMerchant, async (req: express.Request, res: express.Response) => {
-    const { id } = req.params;
-    const merchant = await Merchant.findByPk(id);
-    if (!merchant) {
-      res.status(404).json({ error: 'Merchant not found' });
-      return;
-    }
+router.patch('/:id', validateMerchant, checkMerchantExist, async (req: express.Request, res: express.Response) => {
+    const merchant = (req as any).merchant;
     const { name } = req.body;
     await merchant.update({ name });
     res.json(merchant);
