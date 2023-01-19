@@ -2,73 +2,43 @@ import express from 'express';
 import * as Joi from 'joi';
 
 
-const validate = (schema: any, req: express.Request, res: express.Response) => {
+const validate = (schema: any) => (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const { error } = schema.validate(req.body);
   if (error) {
-    res.status(400).json({ error: error.message });
-    return false;
+    return res.status(400).json({ error: error.message });
   }
-  return true;
+  next();
 }
 
 
-const validateBrand = (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    const schema = Joi.object({
-      name: Joi.string().min(1).required(),
-    });
-    if (validate(schema, req, res)) {
-      next();
-   }
-  };
+const brandSchema = Joi.object({
+  name: Joi.string().min(1).required(),
+});
 
-const validateMerchant = (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    const schema = Joi.object({
-      name: Joi.string().min(1).required(),
-    });
-    if (validate(schema, req, res)) {
-      next();
-   }
-  };
+const merchantSchema = Joi.object({
+  name: Joi.string().min(1).required(),
+});
 
-  const validatePrice = (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    const schema = Joi.object({
-      price: Joi.number().positive().required(),
-      productId: Joi.number().integer().required(),
-      merchantId: Joi.number().integer().required()
-    });
-    if (validate(schema, req, res)) {
-      next();
-   }
-  };
+const priceSchema = Joi.object({
+  price: Joi.number().positive().required(),
+  productId: Joi.number().integer().required(),
+  merchantId: Joi.number().integer().required()
+});
 
-  const validateProduct = (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    const schema = Joi.object({
-      name: Joi.string().min(1).required(),
-      subCategoryId: Joi.number().required(),
-      brandId: Joi.number().required()
-    });
-    if (validate(schema, req, res)) {
-      next();
-   }
-  };
+const productSchema = Joi.object({
+  name: Joi.string().min(1).required(),
+  subCategoryId: Joi.number().integer().required(),
+  brandId: Joi.number().integer().required()
+});
 
-  const validateProductCategory = (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    const schema = Joi.object({
-      name: Joi.string().min(1).required(),
-    });
-    if (validate(schema, req, res)) {
-      next();
-   }
-  };
+const productCategorySchema = Joi.object({
+  name: Joi.string().min(1).required(),
+});
 
-  const validateProductSubCategory = (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    const schema = Joi.object({
-      name: Joi.string().min(1).required(),
-      categoryId: Joi.number().integer().required(),
-    });
-    if (validate(schema, req, res)) {
-      next();
-   }
-  };
+const productSubCategorySchema = Joi.object({
+  name: Joi.string().min(1).required(),
+  categoryId: Joi.number().integer().required(),
+});
 
-export {validateBrand, validateMerchant, validatePrice, validateProduct, validateProductCategory, validateProductSubCategory};
+
+export {brandSchema, merchantSchema, priceSchema, productSchema, productCategorySchema, productSubCategorySchema, validate};

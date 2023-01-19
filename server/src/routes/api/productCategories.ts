@@ -1,7 +1,7 @@
 import express from 'express';
 
 import { ProductCategory } from '../../database/models';
-import { validateProductCategory } from '../middleware/validation';
+import { validate, productCategorySchema } from '../middleware/validation';
 
 const router = express.Router();
 
@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
   });
 
 // To create a new product category
-router.post('/', validateProductCategory, async (req, res) => {
+router.post('/', validate(productCategorySchema) , async (req, res) => {
   const newCategory = req.body;
   const createdCategory = await ProductCategory.create(newCategory);
 
@@ -21,7 +21,7 @@ router.post('/', validateProductCategory, async (req, res) => {
 });
 
 // To update the name of the product category
-router.patch('/:id', validateProductCategory, async (req, res) => {
+router.patch('/:id', validate(productCategorySchema), async (req, res) => {
     const { id } = req.params;
     const updatedCategory = req.body;
     const category = await ProductCategory.findByPk(id);

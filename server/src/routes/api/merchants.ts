@@ -1,7 +1,7 @@
 import express from 'express';
 
 import { Merchant } from '../../database/models';
-import { validateMerchant }  from '../middleware/validation'
+import { validate, merchantSchema } from '../middleware/validation';
 
 const router = express.Router();
 
@@ -28,7 +28,7 @@ router.get('/:id',checkMerchantExist, async (req: express.Request, res: express.
 });
 
 // To create a new merchant
-router.post('/', validateMerchant, async (req: express.Request, res: express.Response) => {
+router.post('/', validate(merchantSchema), async (req: express.Request, res: express.Response) => {
     const { name } = req.body;
     // Check if merchant name is already in use
     const existingMerchant = await Merchant.findOne({ where: { name } });
@@ -42,7 +42,7 @@ router.post('/', validateMerchant, async (req: express.Request, res: express.Res
   });
 
 // To update the merchant
-router.patch('/:id', validateMerchant, checkMerchantExist, async (req: express.Request, res: express.Response) => {
+router.patch('/:id', validate(merchantSchema), checkMerchantExist, async (req: express.Request, res: express.Response) => {
     const merchant = (req as any).merchant;
     const { name } = req.body;
     await merchant.update({ name });

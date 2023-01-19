@@ -1,7 +1,7 @@
 import express from 'express';
 
 import { Brand } from '../../database/models';
-import { validateBrand } from '../middleware/validation';
+import { validate, brandSchema } from '../middleware/validation';
 
 const router = express.Router();
 
@@ -29,7 +29,7 @@ router.get('/:id',checkBrandExist, async (req: express.Request, res: express.Res
 });
 
 // To create a new brand
-router.post('/', validateBrand, async (req: express.Request, res: express.Response) => {
+router.post('/', validate(brandSchema), async (req: express.Request, res: express.Response) => {
     const { name } = req.body;
     // Check if brand name is already in use
     const existingBrand = await Brand.findOne({ where: { name } });
@@ -43,7 +43,7 @@ router.post('/', validateBrand, async (req: express.Request, res: express.Respon
   });
 
 // To update the brand
-router.patch('/:id', validateBrand, checkBrandExist, async (req: express.Request, res: express.Response) => {
+router.patch('/:id', validate(brandSchema), checkBrandExist, async (req: express.Request, res: express.Response) => {
   const brand = (req as any).brand;
   const { name } = req.body;
   await brand.update({ name });
