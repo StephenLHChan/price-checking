@@ -25,6 +25,20 @@ const validateMerchant = (req: express.Request, res: express.Response, next: exp
     next();
   };
 
+  const validatePrice = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    const schema = Joi.object({
+      price: Joi.number().positive().required(),
+      productId: Joi.number().integer().required(),
+      merchantId: Joi.number().integer().required()
+    });
+    const { error } = schema.validate(req.body);
+    if (error) {
+      res.status(400).json({ error: error.message });
+      return;
+    }
+    next();
+  };
+
   const validateProductCategory = (req: express.Request, res: express.Response, next: express.NextFunction) => {
     const schema = Joi.object({
       name: Joi.string().min(1).required(),
@@ -51,4 +65,4 @@ const validateMerchant = (req: express.Request, res: express.Response, next: exp
     next();
   };
 
-export {validateBrand, validateMerchant, validateProductCategory, validateProduct};
+export {validateBrand, validateMerchant, validatePrice, validateProduct, validateProductCategory};
