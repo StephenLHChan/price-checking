@@ -39,18 +39,6 @@ const validateMerchant = (req: express.Request, res: express.Response, next: exp
     next();
   };
 
-  const validateProductCategory = (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    const schema = Joi.object({
-      name: Joi.string().min(1).required(),
-    });
-    const { error } = schema.validate(req.body);
-    if (error) {
-      res.status(400).json({ error: error.message });
-      return;
-    }
-    next();
-  };
-
   const validateProduct = (req: express.Request, res: express.Response, next: express.NextFunction) => {
     const schema = Joi.object({
       name: Joi.string().min(1).required(),
@@ -65,4 +53,29 @@ const validateMerchant = (req: express.Request, res: express.Response, next: exp
     next();
   };
 
-export {validateBrand, validateMerchant, validatePrice, validateProduct, validateProductCategory};
+  const validateProductCategory = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    const schema = Joi.object({
+      name: Joi.string().min(1).required(),
+    });
+    const { error } = schema.validate(req.body);
+    if (error) {
+      res.status(400).json({ error: error.message });
+      return;
+    }
+    next();
+  };
+
+  const validateProductSubCategory = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    const schema = Joi.object({
+      name: Joi.string().min(1).required(),
+      categoryId: Joi.number().integer().required(),
+    });
+    const { error } = schema.validate(req.body);
+    if (error) {
+      res.status(400).json({ error: error.message });
+      return;
+    }
+    next();
+  };
+
+export {validateBrand, validateMerchant, validatePrice, validateProduct, validateProductCategory, validateProductSubCategory};
