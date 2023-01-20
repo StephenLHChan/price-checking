@@ -12,7 +12,7 @@ const validate = (schema: any) => (req: express.Request, res: express.Response, 
 const brandSchema = Joi.object({
   name: Joi.string().min(1).required(),
   description: Joi.string().allow('').optional(),
-  website: Joi.string().allow('').optional(),
+  website: Joi.string().uri().allow('').optional(),
   logo: Joi.string().allow('').optional(),
 });
 
