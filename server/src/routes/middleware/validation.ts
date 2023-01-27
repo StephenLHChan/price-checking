@@ -28,6 +28,8 @@ const priceSchema = Joi.object({
 
 const productSchema = Joi.object({
   name: Joi.string().min(1).required(),
+  description: Joi.string().allow('').optional(),
+  image: Joi.string().allow('').optional(),
   subCategoryId: Joi.number().integer().required(),
   brandId: Joi.number().integer().required(),
 });
