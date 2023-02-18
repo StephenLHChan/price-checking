@@ -1,6 +1,7 @@
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
 
+import Footer from './components/footer';
 import theme from './themes';
 import Routes from './routes';
 
@@ -10,6 +11,7 @@ const App = () => {
       <BrowserRouter>
         <Routes />
       </BrowserRouter>
+      <Footer />
     </ThemeProvider>
   );
 };
