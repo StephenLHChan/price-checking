@@ -1,13 +1,14 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import 'express-async-errors';
+import cors from 'cors';
 
 import routes from './routes';
 
 const app = express();
 
 app.use(bodyParser.json());
-
+app.use(cors());
 app.use(routes);
 
 const errorHandling = (err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
