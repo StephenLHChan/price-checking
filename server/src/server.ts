@@ -2,6 +2,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import 'express-async-errors';
 import cors from 'cors';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 import routes from './routes';
 
@@ -20,8 +22,10 @@ const errorHandling = (err: any, req: express.Request, res: express.Response, ne
 
 app.use(errorHandling);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8000;
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+export default app;
