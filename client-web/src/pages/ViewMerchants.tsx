@@ -10,7 +10,7 @@ const ViewMerchants = () => {
 
   const getMerchants = async () => {
     try {
-      const { data } = await axios.get('http://localhost:8000/api/merchants');
+      const { data } = await axios.get('/api/merchants');
       setMerchants(data);
       console.log(data);
     } catch (err) {

@@ -16,7 +16,7 @@ const CreateBrand = () => {
 
   const getBrandNames = async () => {
     try {
-      const { data } = await axios.get('http://localhost:8000/api/brands');
+      const { data } = await axios.get('/api/brands');
       const brandNames: Array<string> = data.map((brand: { name: string }) => brand.name);
       return brandNames;
     } catch (err) {
@@ -25,7 +25,7 @@ const CreateBrand = () => {
   };
 
   const saveBrands = async (body: { name: string; description: string; website: string; logo: string }) => {
-    const { data } = await axios.post('http://localhost:8000/api/brands', body);
+    const { data } = await axios.post('/api/brands', body);
     return data;
   };
 

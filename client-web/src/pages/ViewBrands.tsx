@@ -6,11 +6,11 @@ import PageTitle from '../components/pageTitle';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
 const ViewBrands = () => {
-  const [brands, setBrands] = useState([]);
+  const [brands, setBrands] = useState<Array<string>>([]);
 
   const getBrands = async () => {
     try {
-      const { data } = await axios.get('http://localhost:8000/api/brands');
+      const { data } = await axios.get('/api/brands');
       setBrands(data);
       console.log(data);
     } catch (err) {
